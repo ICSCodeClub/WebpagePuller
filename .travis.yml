@@ -1,1 +1,11 @@
 language: java
+
+before_script:
+ - sudo apt update -y
+ - sudo apt install openjdk-8-jdk openjdk-8-jre -y
+ - sudo apt install maven -y
+ 
+ script:
+  - mvn install
+ 
+ 
