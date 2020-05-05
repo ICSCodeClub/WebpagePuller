@@ -19,6 +19,9 @@ public class StringUtils {
 		else return str;
 	}
 	public static String removeGarbage(String str) {
+		str = str.replace("“", "\"");
+		str = str.replace("”", "\"");
+		str = str.replace("’", "'");
 		for(String trash : garbage) str = str.replace(trash, "");
 		return str;
 	}

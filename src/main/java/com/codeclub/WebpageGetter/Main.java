@@ -24,12 +24,24 @@ public class Main {
 		
 		System.out.println("Total: "+acceptedUrls.length);
 		
-		String singleUrl = acceptedUrls[8];
-		System.out.println("beginning trial on "+singleUrl);
-		
-		String singleSite = Jsoup.connect(singleUrl).get().html();
-		System.out.println(SingleSiteParser.getByTag("h1", singleSite)); //gets title
-		System.out.println(SingleSiteParser.getByClass("single-essay-item", singleSite)); //gets essay
+		PrintStream fileOut = new PrintStream(new File("Essays.txt"));
+		for(String siteUrl : acceptedUrls) {
+			try {
+				String site = Jsoup.connect(siteUrl).get().html();
+				String title = SingleSiteParser.getByTag("h1", site);
+				String essay = SingleSiteParser.getByClass("single-essay-item", site);
+				
+				if(title.length() + essay.length() > 100) {
+					fileOut.println("<start>");
+					fileOut.println(StringUtils.removeGarbage(title)+"\n");
+					fileOut.println(StringUtils.removeGarbage(essay));
+				}
+			}
+			catch(Exception e){
+				//ignore errors
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	public static String findSitemapUrl(String domain) {
